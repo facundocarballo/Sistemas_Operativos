@@ -38,8 +38,8 @@ void server_wait_query(Client *p_client)
 
     // Create the Semaphores;
     sem_t *mutex_memory = sem_open("mutex", O_CREAT, 0666, 1);
-    sem_t *are_query = sem_open("/are_query", O_CREAT, 0666, 0);       //
-    sem_t *are_response = sem_open("/are_response", O_CREAT, 0666, 0); //
+    sem_t *are_query = sem_open("/are_query", O_CREAT, 0666, 0);
+    sem_t *are_response = sem_open("/are_response", O_CREAT, 0666, 0);
 
     if (mutex_memory == SEM_FAILED ||
         are_query == SEM_FAILED ||
@@ -49,7 +49,6 @@ void server_wait_query(Client *p_client)
         exit(1);
     }
 
-    // server_read_query(p_client, mutex_memory, are_response);
 }
 
 char server_analyze_query(const Query *p_query)
@@ -104,7 +103,6 @@ void server_read_query(Client *p_client)
         break;
     case 'N':
         strcpy(p_client->buffer_client, "Consulta Invalida...");
-        // write(p_client->socket_number, "Consulta Invalida...", 512);
         write(p_client->socket_number, p_client->buffer_client, sizeof(p_client->buffer_client));
         break;
     }
@@ -142,7 +140,7 @@ int server_up(const Query *p_query, Client *p_client)
 {
     char res[SIZE_QUERY];
     strcpy(res, p_query->name);
-    FILE *arch = fopen("gatos.txt", "r+"); // antes solamente estaba logs.txt
+    FILE *arch = fopen("gatos.txt", "r+");
 
     if (!arch)
     {
@@ -169,7 +167,7 @@ int server_up(const Query *p_query, Client *p_client)
 int server_down(const Query *p_query, Client *p_client)
 {
     Cat cat;
-    FILE *arch = fopen("gatos.txt", "r+"); // antes solamente estaba logs.txt
+    FILE *arch = fopen("gatos.txt", "r+");
     if (!arch)
     {
         strcpy(p_client->buffer_client, "No se pudo abrir el archivo gatos.txt");
